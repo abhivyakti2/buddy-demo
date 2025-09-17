@@ -41,8 +41,6 @@ const Input: React.FC<InputProps> = ({
             leftIcon && 'pl-12',
             rightIcon && 'pr-12',
             error && 'border-pink-500 focus:border-pink-600 shadow-sparkle',
-            className
-          )}
           {...props}
         />
         
@@ -55,6 +53,16 @@ const Input: React.FC<InputProps> = ({
       
       {error && (
         <p className="text-sm text-pink-600 font-semibold animate-pulse flex items-center">
+          <span className="mr-1">💖</span>
+          {error}
+        </p>
+      )}
+      {helperText && !error && (
+        <p className="text-sm text-violet-600 font-medium flex items-center">
+          <span className="mr-1">✨</span>
+          {helperText}
+        </p>
+      )}
           <span className="mr-1">💖</span>
           {error}
         </p>

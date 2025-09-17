@@ -76,11 +76,15 @@ const PreferencesForm: React.FC<PreferencesFormProps> = ({
         <Sparkles className="w-8 h-8 mr-3 text-pink-500 animate-twinkle" />
         <h2 className="text-3xl font-bold glitter-text">✨ Your Magical Preferences ✨</h2>
       </div>
+        <Sparkles className="w-8 h-8 mr-3 text-pink-500 animate-twinkle" />
+        <h2 className="text-3xl font-bold glitter-text">✨ Your Magical Preferences ✨</h2>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
             <Heart className="w-5 h-5 mr-2 text-pink-500 animate-heartbeat" />
+            Favorite Cuisines 💕
             Favorite Cuisines 💕
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -93,12 +97,13 @@ const PreferencesForm: React.FC<PreferencesFormProps> = ({
                   className="rounded-lg border-pink-300 text-pink-600 focus:ring-pink-500 mr-3"
                 />
                 <span className="text-sm font-semibold text-violet-800">{cuisine}</span>
-              </label>
+                <span className="text-sm font-semibold text-violet-800">{cuisine}</span>
             ))}
           </div>
         </div>
 
         <div>
+          <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
           <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
             <Sparkles className="w-5 h-5 mr-2 text-violet-500 animate-twinkle" />
             Price Range 💰
@@ -118,12 +123,13 @@ const PreferencesForm: React.FC<PreferencesFormProps> = ({
                   className="border-violet-300 text-violet-600 focus:ring-violet-500 mr-3"
                 />
                 <span className="text-sm font-semibold text-violet-800 capitalize">{range}</span>
-              </label>
+                <span className="text-sm font-semibold text-violet-800 capitalize">{range}</span>
             ))}
           </div>
         </div>
 
         <div>
+          <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
           <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
             <Heart className="w-5 h-5 mr-2 text-pink-500 animate-heartbeat" />
             Preferred Atmosphere 🌟
@@ -138,12 +144,13 @@ const PreferencesForm: React.FC<PreferencesFormProps> = ({
                   className="rounded-lg border-pink-300 text-pink-600 focus:ring-pink-500 mr-3"
                 />
                 <span className="text-sm font-semibold text-violet-800">{atmosphere}</span>
-              </label>
+                <span className="text-sm font-semibold text-violet-800">{atmosphere}</span>
             ))}
           </div>
         </div>
 
         <div>
+          <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
           <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
             <Sparkles className="w-5 h-5 mr-2 text-violet-500 animate-twinkle" />
             Dietary Restrictions 🥗
@@ -167,6 +174,7 @@ const PreferencesForm: React.FC<PreferencesFormProps> = ({
           <label className="block text-sm font-bold text-violet-800 mb-4 flex items-center">
             <Heart className="w-5 h-5 mr-2 text-pink-500 animate-heartbeat" />
             Maximum Distance (miles) 🗺️
+            Maximum Distance (miles) 🗺️
           </label>
           <div className="p-4 rounded-2xl bg-white/20 backdrop-blur-sm border border-violet-200 shadow-sparkle">
             <input
@@ -183,6 +191,8 @@ const PreferencesForm: React.FC<PreferencesFormProps> = ({
             <div className="flex justify-between text-sm text-violet-700 font-semibold mt-3">
               <span>1 mile 📍</span>
               <span className="font-bold text-pink-600 bg-pink-100 px-3 py-1 rounded-full">{preferences.maxDistance} miles ✨</span>
+              <span>50 miles 🌍</span>
+            </div>
               <span>50 miles 🌍</span>
             </div>
           </div>

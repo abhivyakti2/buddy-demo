@@ -17,6 +17,9 @@ const RoomMembersList: React.FC<RoomMembersListProps> = ({ members }) => {
         </div>
         <h3 className="text-xl font-bold gradient-text">
           ✨ Magical Members ({members.length}) 💕
+        </div>
+        <h3 className="text-xl font-bold gradient-text">
+          ✨ Magical Members ({members.length}) 💕
         </h3>
       </div>
       
@@ -30,6 +33,9 @@ const RoomMembersList: React.FC<RoomMembersListProps> = ({ members }) => {
                 </span>
               </div>
               <div className="ml-4">
+                <span className="text-violet-900 font-bold text-lg">{member.name}</span>
+                <Heart className="w-4 h-4 inline ml-2 text-pink-500 animate-heartbeat" />
+              </div>
                 <span className="text-violet-900 font-bold text-lg">{member.name}</span>
                 <Heart className="w-4 h-4 inline ml-2 text-pink-500 animate-heartbeat" />
               </div>

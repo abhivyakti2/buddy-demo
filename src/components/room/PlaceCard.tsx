@@ -67,6 +67,17 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
         </div>
       )}
       
+      {showTimer && (
+        <div className={`p-4 text-center font-bold text-lg ${
+          timeLeft <= 10 ? 'bg-red-100 text-red-700' : 
+          timeLeft <= 20 ? 'bg-yellow-100 text-yellow-700' : 
+          'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700'
+        }`}>
+          <Clock className="w-5 h-5 inline mr-2 animate-twinkle" />
+          {timeLeft}s remaining ⏰
+        </div>
+      )}
+      
       {place.photos.length > 0 && (
         <div className="h-48 overflow-hidden relative">
           <img
@@ -74,6 +85,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
             alt={place.name}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
         </div>
       )}
@@ -135,12 +147,19 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
           </div>
         )}
         
+        {hasVoted && showTimer && (
+          <div className="mb-4 p-4 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-2xl text-center font-bold shadow-sparkle">
+            ✓ Vote recorded! Moving to next place... 💕
+          </div>
+        )}
+        
         <div className="flex space-x-2 mb-4">
           <Button
             size="sm"
             variant={userVote?.value === 'love' ? 'primary' : 'outline'}
             onClick={() => onVote(place.id, 'love')}
             className="flex-1"
+            disabled={hasVoted && showTimer}
             disabled={hasVoted && showTimer}
           >
             <Heart className="w-4 h-4 mr-1 animate-heartbeat" />
@@ -152,6 +171,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
             onClick={() => onVote(place.id, 'like')}
             className="flex-1"
             disabled={hasVoted && showTimer}
+            disabled={hasVoted && showTimer}
           >
             <ThumbsUp className="w-4 h-4 mr-1 animate-twinkle" />
             Like ✨
@@ -161,6 +181,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
             variant={userVote?.value === 'dislike' ? 'outline' : 'ghost'}
             onClick={() => onVote(place.id, 'dislike')}
             className="flex-1"
+            disabled={hasVoted && showTimer}
             disabled={hasVoted && showTimer}
           >
             <ThumbsDown className="w-4 h-4 mr-1 animate-twinkle" />

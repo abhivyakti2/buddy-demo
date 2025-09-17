@@ -291,6 +291,11 @@ const Room: React.FC = () => {
                 <span>• {currentRoom.occasion} ({currentRoom.mood}) 💕</span>
               )}
             </div>
+              <span>Room Code: <span className="font-mono font-bold text-pink-600 bg-pink-100 px-2 py-1 rounded-lg">{currentRoom.code}</span></span>
+              {currentRoom.occasion && (
+                <span>• {currentRoom.occasion} ({currentRoom.mood}) 💕</span>
+              )}
+            </div>
           </div>
           
           <div className="flex items-center space-x-3 mt-4 sm:mt-0">
@@ -311,6 +316,12 @@ const Room: React.FC = () => {
               Share 💕
             </Button>
             
+            
+            <Button variant="outline" size="sm" onClick={handleShare}>
+              <Share2 className="w-4 h-4 mr-2 animate-twinkle" />
+              Share 💕
+            </Button>
+            
             <Button variant="outline" size="sm" onClick={getNewSuggestions} loading={loading}>
               <RefreshCw className="w-4 h-4 mr-2 animate-spin-slow" />
               More Magic ✨
@@ -320,6 +331,8 @@ const Room: React.FC = () => {
 
         {error && (
           <div className="bg-gradient-to-r from-pink-100 to-rose-100 border-2 border-pink-300 text-pink-800 px-6 py-4 rounded-2xl mb-6 shadow-sparkle font-medium">
+            {error}
+          </div>
             {error}
           </div>
         )}
@@ -336,6 +349,7 @@ const Room: React.FC = () => {
               }`}
             >
               <UsersIcon className="w-5 h-5 mr-2 inline animate-twinkle" />
+              <UsersIcon className="w-5 h-5 mr-2 inline animate-twinkle" />
               Browse Mode 💕
             </button>
             <button
@@ -347,6 +361,7 @@ const Room: React.FC = () => {
               }`}
             >
               <Trophy className="w-5 h-5 mr-2 inline animate-twinkle" />
+              Voting Mode ✨
               Voting Mode ✨
             </button>
           </div>
@@ -386,6 +401,10 @@ const Room: React.FC = () => {
                       <span className="text-violet-500 font-medium">
                         {currentRoom.votes.filter(v => v.placeId === topPlace.id).length} votes 💕
                       </span>
+                      </span>
+                      <span className="text-violet-500 font-medium">
+                        {currentRoom.votes.filter(v => v.placeId === topPlace.id).length} votes 💕
+                      </span>
                     </div>
                   </div>
                 </Card>
@@ -419,6 +438,12 @@ const Room: React.FC = () => {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold glitter-text">✨ Place Suggestions ✨</h2>
                 <div className="flex items-center space-x-4">
+                  <p className="text-violet-600 font-semibold">{places.length} magical suggestions 🌟</p>
+                  <Button onClick={startVotingMode} size="sm">
+                    <Trophy className="w-4 h-4 mr-2 animate-heartbeat" />
+                    Start Voting ✨
+                  </Button>
+                </div>
                   <p className="text-violet-600 font-semibold">{places.length} magical suggestions 🌟</p>
                   <Button onClick={startVotingMode} size="sm">
                     <Trophy className="w-4 h-4 mr-2 animate-heartbeat" />

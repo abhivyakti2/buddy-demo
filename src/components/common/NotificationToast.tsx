@@ -54,6 +54,9 @@ const NotificationToast: React.FC = () => {
               <Sparkles className="w-3 h-3 absolute -top-1 -right-1 animate-sparkle" />
             </div>
             <p className="text-sm font-bold flex-1">{notification.message}</p>
+              <Sparkles className="w-3 h-3 absolute -top-1 -right-1 animate-sparkle" />
+            </div>
+            <p className="text-sm font-bold flex-1">{notification.message}</p>
             <button
               onClick={() => dispatch(removeNotification(notification.id))}
               className="ml-3 flex-shrink-0 hover:opacity-70 transition-all duration-300 hover:scale-110 p-1 rounded-full hover:bg-white/20"
