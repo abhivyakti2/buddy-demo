@@ -116,7 +116,7 @@ const Home: React.FC = () => {
               <Input
                 label="What's your name?"
                 value={name}
-                onChange={setName}
+               onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 required
                 className="mb-6"
