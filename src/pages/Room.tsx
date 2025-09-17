@@ -5,13 +5,15 @@ import { useAppDispatch, useAppSelector } from '../store';
 import { addVote, setCurrentRoom, updateRoomStatus } from '../store/slices/roomSlice';
 import { setPlaces } from '../store/slices/placesSlice';
 import { addNotification } from '../store/slices/uiSlice';
-import { Vote } from '../types';
+import { updatePreferences } from '../store/slices/userSlice';
+import { Vote, UserPreferences } from '../types';
 import Button from '../components/common/Button';
 import Card from '../components/common/Card';
 import PlaceCard from '../components/room/PlaceCard';
 import RoomMembersList from '../components/room/RoomMembersList';
 import VotingCarousel from '../components/room/VotingCarousel';
 import PreferencesDisplay from '../components/preferences/PreferencesDisplay';
+import PreferencesForm from '../components/preferences/PreferencesForm';
 import OccasionSelector from '../components/room/OccasionSelector';
 
 const Room: React.FC = () => {
@@ -27,6 +29,7 @@ const Room: React.FC = () => {
   const [error, setError] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
   const [showPreferences, setShowPreferences] = useState(false);
+  const [showPreferencesForm, setShowPreferencesForm] = useState(false);
   const [showOccasionSelector, setShowOccasionSelector] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'voting'>('grid');
 
@@ -192,12 +195,21 @@ const Room: React.FC = () => {
     setShowOccasionSelector(false);
   };
 
+  const handlePreferencesUpdate = (preferences: UserPreferences) => {
+    dispatch(updatePreferences(preferences));
+    setShowPreferencesForm(false);
+    dispatch(addNotification({
+      type: 'success',
+      message: 'Preferences updated for this outing!'
+    }));
+  };
+
   const startVotingMode = () => {
     setViewMode('voting');
-    dispatch(updateRoomStatus('voting'));
+    dispatch(updateRoomStatus('waiting'));
     dispatch(addNotification({
       type: 'info',
-      message: 'Starting voting session! Vote on each place.'
+      message: 'Ready to start voting! Click "Start Voting Session" when ready.'
     }));
   };
 
@@ -242,6 +254,26 @@ const Room: React.FC = () => {
           onSelect={handleOccasionSelect}
           onSkip={() => setShowOccasionSelector(false)}
         />
+      </div>
+    );
+  }
+
+  // Show preferences form
+  if (showPreferencesForm && user.preferences) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 p-4">
+        <div className="max-w-2xl mx-auto py-8">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Update Preferences for This Outing</h1>
+            <p className="text-gray-600">Customize your preferences just for this session</p>
+          </div>
+          
+          <PreferencesForm
+            initialPreferences={user.preferences}
+            onSave={handlePreferencesUpdate}
+            onCancel={() => setShowPreferencesForm(false)}
+          />
+        </div>
       </div>
     );
   }
@@ -333,8 +365,8 @@ const Room: React.FC = () => {
               {showPreferences && user.preferences && (
                 <PreferencesDisplay
                   preferences={user.preferences}
-                  onEdit={() => setShowPreferences(false)}
-                  showEditButton={false}
+                  onEdit={() => setShowPreferencesForm(true)}
+                  title="Current Outing Preferences"
                 />
               )}
               
@@ -359,14 +391,25 @@ const Room: React.FC = () => {
                 </Card>
               )}
 
-              <div className="text-center">
+              <div className="space-y-3">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setShowPreferences(!showPreferences)}
+                  fullWidth
                 >
                   <Settings className="w-4 h-4 mr-2" />
                   {showPreferences ? 'Hide' : 'Show'} Preferences
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowPreferencesForm(true)}
+                  fullWidth
+                >
+                  <Settings className="w-4 h-4 mr-2" />
+                  Change Preferences
                 </Button>
               </div>
             </div>
