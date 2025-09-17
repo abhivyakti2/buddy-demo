@@ -405,6 +405,40 @@ body::after {
   box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
 }
 
+/* Custom range slider styling */
+.slider-thumb::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff69b4, #da70d6);
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  border: 3px solid white;
+  transition: all 0.3s ease;
+}
+
+.slider-thumb::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+}
+
+.slider-thumb::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff69b4, #da70d6);
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  border: 3px solid white;
+  transition: all 0.3s ease;
+}
+
+.slider-thumb::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+}
+
 /* Enhanced magical particles for special elements */
 .magical-element::before {
   content: '✨';
