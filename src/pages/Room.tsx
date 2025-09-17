@@ -279,75 +279,75 @@ const Room: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div className="min-h-screen relative z-10">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{currentRoom.name}</h1>
-            <div className="flex items-center space-x-4 text-sm text-gray-600">
-              <span>Room Code: <span className="font-mono font-semibold text-primary-600">{currentRoom.code}</span></span>
+            <h1 className="text-4xl font-bold glitter-text mb-4 animate-shimmer">✨ {currentRoom.name} ✨</h1>
+            <div className="flex items-center space-x-4 text-sm text-violet-700 font-medium">
+              <span>Room Code: <span className="font-mono font-bold text-pink-600 bg-pink-100 px-2 py-1 rounded-lg">{currentRoom.code}</span></span>
               {currentRoom.occasion && (
-                <span>• {currentRoom.occasion} ({currentRoom.mood})</span>
+                <span>• {currentRoom.occasion} ({currentRoom.mood}) 💕</span>
               )}
             </div>
           </div>
           
           <div className="flex items-center space-x-3 mt-4 sm:mt-0">
             {timeLeft > 0 && (
-              <div className="flex items-center text-orange-600 bg-orange-100 px-3 py-1 rounded-full">
-                <Clock className="w-4 h-4 mr-1" />
-                <span className="text-sm font-medium">{formatTime(timeLeft)}</span>
+              <div className="flex items-center text-pink-600 bg-gradient-to-r from-pink-100 to-violet-100 px-4 py-2 rounded-full shadow-sparkle animate-pulse">
+                <Clock className="w-4 h-4 mr-2 animate-twinkle" />
+                <span className="text-sm font-bold">{formatTime(timeLeft)} ⏰</span>
               </div>
             )}
             
             <Button variant="outline" size="sm" onClick={() => setShowOccasionSelector(true)}>
-              <Settings className="w-4 h-4 mr-2" />
-              Occasion
+              <Settings className="w-4 h-4 mr-2 animate-twinkle" />
+              Occasion ✨
             </Button>
             
             <Button variant="outline" size="sm" onClick={handleShare}>
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
+              <Share2 className="w-4 h-4 mr-2 animate-twinkle" />
+              Share 💕
             </Button>
             
             <Button variant="outline" size="sm" onClick={getNewSuggestions} loading={loading}>
-              <RefreshCw className="w-4 h-4 mr-2" />
-              More Places
+              <RefreshCw className="w-4 h-4 mr-2 animate-spin-slow" />
+              More Magic ✨
             </Button>
           </div>
         </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+          <div className="bg-gradient-to-r from-pink-100 to-rose-100 border-2 border-pink-300 text-pink-800 px-6 py-4 rounded-2xl mb-6 shadow-sparkle font-medium">
             {error}
           </div>
         )}
 
         {/* View Mode Toggle */}
         <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-xl p-1 shadow-lg">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-2 shadow-magical border-2 border-pink-200">
             <button
               onClick={() => setViewMode('grid')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              className={`px-8 py-3 rounded-xl font-bold transition-all duration-300 ${
                 viewMode === 'grid'
-                  ? 'bg-primary-500 text-white shadow-md'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-gradient-to-r from-pink-400 to-violet-500 text-white shadow-sparkle transform scale-105'
+                  : 'text-violet-600 hover:text-violet-800 hover:bg-violet-50'
               }`}
             >
-              <UsersIcon className="w-4 h-4 mr-2 inline" />
-              Browse Mode
+              <UsersIcon className="w-5 h-5 mr-2 inline animate-twinkle" />
+              Browse Mode 💕
             </button>
             <button
               onClick={startVotingMode}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              className={`px-8 py-3 rounded-xl font-bold transition-all duration-300 ${
                 viewMode === 'voting'
-                  ? 'bg-secondary-500 text-white shadow-md'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-gradient-to-r from-violet-400 to-purple-500 text-white shadow-sparkle transform scale-105'
+                  : 'text-violet-600 hover:text-violet-800 hover:bg-violet-50'
               }`}
             >
-              <Trophy className="w-4 h-4 mr-2 inline" />
-              Voting Mode
+              <Trophy className="w-5 h-5 mr-2 inline animate-twinkle" />
+              Voting Mode ✨
             </button>
           </div>
         </div>
@@ -373,18 +373,18 @@ const Room: React.FC = () => {
               {topPlace && (
                 <Card className="p-4">
                   <div className="flex items-center mb-3">
-                    <Trophy className="w-5 h-5 mr-2 text-yellow-500" />
-                    <h3 className="text-lg font-semibold text-gray-900">Top Choice</h3>
+                    <Trophy className="w-6 h-6 mr-2 text-yellow-500 animate-heartbeat" />
+                    <h3 className="text-lg font-bold gradient-text">Top Choice ✨</h3>
                   </div>
                   <div className="space-y-2">
-                    <h4 className="font-medium text-gray-900">{topPlace.name}</h4>
-                    <p className="text-sm text-gray-600">{topPlace.address}</p>
+                    <h4 className="font-bold text-violet-900">{topPlace.name}</h4>
+                    <p className="text-sm text-violet-600 font-medium">{topPlace.address}</p>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-green-600 font-medium">
-                        Score: {Math.round(topPlace.score)}
+                      <span className="text-pink-600 font-bold">
+                        Score: {Math.round(topPlace.score)} 🌟
                       </span>
-                      <span className="text-gray-500">
-                        {currentRoom.votes.filter(v => v.placeId === topPlace.id).length} votes
+                      <span className="text-violet-500 font-medium">
+                        {currentRoom.votes.filter(v => v.placeId === topPlace.id).length} votes 💕
                       </span>
                     </div>
                   </div>
@@ -398,8 +398,8 @@ const Room: React.FC = () => {
                   onClick={() => setShowPreferences(!showPreferences)}
                   fullWidth
                 >
-                  <Settings className="w-4 h-4 mr-2" />
-                  {showPreferences ? 'Hide' : 'Show'} Preferences
+                  <Settings className="w-4 h-4 mr-2 animate-twinkle" />
+                  {showPreferences ? 'Hide' : 'Show'} Preferences ✨
                 </Button>
                 
                 <Button
@@ -408,8 +408,8 @@ const Room: React.FC = () => {
                   onClick={() => setShowPreferencesForm(true)}
                   fullWidth
                 >
-                  <Settings className="w-4 h-4 mr-2" />
-                  Change Preferences
+                  <Settings className="w-4 h-4 mr-2 animate-twinkle" />
+                  Change Preferences 💕
                 </Button>
               </div>
             </div>
@@ -417,20 +417,20 @@ const Room: React.FC = () => {
             {/* Main Content */}
             <div className="lg:col-span-3">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Place Suggestions</h2>
+                <h2 className="text-3xl font-bold glitter-text">✨ Place Suggestions ✨</h2>
                 <div className="flex items-center space-x-4">
-                  <p className="text-gray-600">{places.length} suggestions</p>
+                  <p className="text-violet-600 font-semibold">{places.length} magical suggestions 🌟</p>
                   <Button onClick={startVotingMode} size="sm">
-                    <Trophy className="w-4 h-4 mr-2" />
-                    Start Voting
+                    <Trophy className="w-4 h-4 mr-2 animate-heartbeat" />
+                    Start Voting ✨
                   </Button>
                 </div>
               </div>
 
               {places.length === 0 && !loading ? (
                 <Card className="p-8 text-center">
-                  <p className="text-gray-600 mb-4">No suggestions yet. Click "More Places" to get AI-powered recommendations!</p>
-                  <Button onClick={getNewSuggestions} loading={loading}>Get Suggestions</Button>
+                  <p className="text-violet-600 mb-4 font-medium text-lg">No suggestions yet. Click "More Magic" to get AI-powered recommendations! ✨</p>
+                  <Button onClick={getNewSuggestions} loading={loading}>Get Magical Suggestions 🌟</Button>
                 </Card>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

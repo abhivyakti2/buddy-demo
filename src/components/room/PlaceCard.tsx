@@ -55,51 +55,52 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
   };
 
   return (
-    <Card hoverable className="overflow-hidden">
+    <Card hoverable className="overflow-hidden animate-float">
       {showTimer && (
-        <div className={`p-3 text-center font-mono font-bold ${
+        <div className={`p-4 text-center font-bold text-lg ${
           timeLeft <= 10 ? 'bg-red-100 text-red-700' : 
           timeLeft <= 20 ? 'bg-yellow-100 text-yellow-700' : 
-          'bg-green-100 text-green-700'
+          'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700'
         }`}>
-          <Clock className="w-4 h-4 inline mr-2" />
-          {timeLeft}s remaining
+          <Clock className="w-5 h-5 inline mr-2 animate-twinkle" />
+          {timeLeft}s remaining ⏰
         </div>
       )}
       
       {place.photos.length > 0 && (
-        <div className="h-48 overflow-hidden">
+        <div className="h-48 overflow-hidden relative">
           <img
             src={place.photos[0]}
             alt={place.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
         </div>
       )}
       
       <div className="p-6">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-bold text-gray-900">{place.name}</h3>
-          <div className="flex items-center text-yellow-500">
-            <Star className="w-4 h-4 fill-current" />
-            <span className="ml-1 text-sm font-medium">{place.rating}</span>
+          <h3 className="text-xl font-bold gradient-text">{place.name}</h3>
+          <div className="flex items-center text-yellow-500 bg-yellow-50 px-2 py-1 rounded-full">
+            <Star className="w-4 h-4 fill-current animate-twinkle" />
+            <span className="ml-1 text-sm font-bold">{place.rating}</span>
           </div>
         </div>
         
-        <div className="flex items-center text-gray-600 mb-3">
-          <MapPin className="w-4 h-4 mr-1" />
-          <span className="text-sm">{place.address}</span>
+        <div className="flex items-center text-violet-600 mb-3">
+          <MapPin className="w-4 h-4 mr-2 animate-twinkle" />
+          <span className="text-sm font-medium">{place.address}</span>
         </div>
         
-        <p className="text-gray-700 mb-4">{place.description}</p>
+        <p className="text-violet-700 mb-4 font-medium">{place.description}</p>
         
         {place.reasons.length > 0 && (
           <div className="mb-4">
-            <h4 className="text-sm font-semibold text-gray-800 mb-2">AI Recommendation:</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
+            <h4 className="text-sm font-bold text-pink-800 mb-2">✨ AI Recommendation:</h4>
+            <ul className="text-sm text-violet-600 space-y-1">
               {place.reasons.map((reason, index) => (
                 <li key={index} className="flex items-start">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                  <span className="w-2 h-2 bg-gradient-to-r from-pink-400 to-violet-500 rounded-full mt-1.5 mr-3 flex-shrink-0 animate-twinkle"></span>
                   {reason}
                 </li>
               ))}
@@ -108,29 +109,29 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
         )}
         
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-4 text-sm text-gray-600">
+          <div className="flex items-center space-x-4 text-sm font-medium">
             <span className="flex items-center">
-              <Heart className="w-4 h-4 mr-1 text-red-500" />
+              <Heart className="w-4 h-4 mr-1 text-red-500 animate-heartbeat" />
               {voteCount.love}
             </span>
             <span className="flex items-center">
-              <ThumbsUp className="w-4 h-4 mr-1 text-green-500" />
+              <ThumbsUp className="w-4 h-4 mr-1 text-green-500 animate-twinkle" />
               {voteCount.like}
             </span>
             <span className="flex items-center">
-              <ThumbsDown className="w-4 h-4 mr-1 text-red-500" />
+              <ThumbsDown className="w-4 h-4 mr-1 text-gray-500 animate-twinkle" />
               {voteCount.dislike}
             </span>
           </div>
           
-          <div className="text-sm font-medium text-blue-600">
-            AI Score: {Math.round(place.aiScore * 100)}%
+          <div className="text-sm font-bold text-pink-600 bg-pink-50 px-2 py-1 rounded-full">
+            AI Score: {Math.round(place.aiScore * 100)}% ✨
           </div>
         </div>
         
         {hasVoted && showTimer && (
-          <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-lg text-center">
-            ✓ Vote recorded! Moving to next place...
+          <div className="mb-4 p-4 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-2xl text-center font-bold shadow-sparkle">
+            ✓ Vote recorded! Moving to next place... 💕
           </div>
         )}
         
@@ -142,8 +143,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
             className="flex-1"
             disabled={hasVoted && showTimer}
           >
-            <Heart className="w-4 h-4 mr-1" />
-            Love
+            <Heart className="w-4 h-4 mr-1 animate-heartbeat" />
+            Love 💕
           </Button>
           <Button
             size="sm"
@@ -152,8 +153,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
             className="flex-1"
             disabled={hasVoted && showTimer}
           >
-            <ThumbsUp className="w-4 h-4 mr-1" />
-            Like
+            <ThumbsUp className="w-4 h-4 mr-1 animate-twinkle" />
+            Like ✨
           </Button>
           <Button
             size="sm"
@@ -162,19 +163,19 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
             className="flex-1"
             disabled={hasVoted && showTimer}
           >
-            <ThumbsDown className="w-4 h-4 mr-1" />
-            Pass
+            <ThumbsDown className="w-4 h-4 mr-1 animate-twinkle" />
+            Pass 🤷‍♀️
           </Button>
         </div>
         
         <div className="flex space-x-2">
           <Button size="sm" variant="outline" onClick={openInMaps} className="flex-1">
-            <MapPin className="w-4 h-4 mr-1" />
-            Maps
+            <MapPin className="w-4 h-4 mr-1 animate-twinkle" />
+            Maps 🗺️
           </Button>
           <Button size="sm" variant="outline" onClick={shareLocation} className="flex-1">
-            <ExternalLink className="w-4 h-4 mr-1" />
-            Share
+            <ExternalLink className="w-4 h-4 mr-1 animate-twinkle" />
+            Share 💕
           </Button>
         </div>
       </div>

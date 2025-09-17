@@ -8,6 +8,7 @@ import { setPlaces } from './store/slices/placesSlice';
 import NotificationToast from './components/common/NotificationToast';
 import Home from './pages/Home';
 import Room from './pages/Room';
+import { Heart } from 'lucide-react';
 
 // Mock data for preview
 const mockUser = {
@@ -134,11 +135,31 @@ store.dispatch(setUser(mockUser));
 store.dispatch(setCurrentRoom(mockRoom));
 store.dispatch(setPlaces(mockPlaces));
 
+// Floating Hearts Component
+const FloatingHearts = () => {
+  return (
+    <div className="floating-hearts">
+      {[...Array(9)].map((_, i) => (
+        <Heart 
+          key={i} 
+          className={`floating-heart w-6 h-6 fill-current`}
+          style={{
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${i * 0.5}s`,
+            animationDuration: `${6 + Math.random() * 4}s`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen relative">
+          <FloatingHearts />
           <NotificationToast />
           <Routes>
             <Route path="/" element={<Room />} />
