@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Users, Sparkles, ArrowRight } from 'lucide-react';
-import { useAppDispatch } from '../store';
+import { MapPin, Users, Sparkles, ArrowRight, Settings2 } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../store';
 import { setUser } from '../store/slices/userSlice';
 import { setCurrentRoom } from '../store/slices/roomSlice';
 import { addNotification } from '../store/slices/uiSlice';
@@ -15,11 +15,14 @@ import PreferencesForm from '../components/preferences/PreferencesForm';
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [step, setStep] = useState<'welcome' | 'preferences' | 'action'>('welcome');
+  const [step, setStep] = useState<'welcome' | 'preferences' | 'action' | 'preCreate'>('welcome');
   const [name, setName] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [occasion, setOccasion] = useState('');
+  const [mood, setMood] = useState('');
+  const [overrideOutingPrefs, setOverrideOutingPrefs] = useState<UserPreferences | null>(null);
 
   const handleNameSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,24 +53,26 @@ const Home: React.FC = () => {
   };
 
   const handleCreateRoom = async () => {
+    // Ask for occasion/mood and let user optionally override preferences for this outing
+    setStep('preCreate');
+  };
+
+  const finalizeCreateRoom = async () => {
     try {
       setLoading(true);
       const response = await roomAPI.createRoom({ 
         name: `${name}'s Outing`, 
-        creatorId: 'user-id' // This would come from user state
-      });
+        creatorId: 'user-id', // TODO: replace with actual user.id from state when available
+        // These extra fields are not typed in API yet but backend can ignore/accept
+        occasion,
+        mood,
+      } as any);
       dispatch(setCurrentRoom(response.data));
-      navigate(`/room/${response.data.id}`);
-      dispatch(addNotification({
-        type: 'success',
-        message: 'Room created successfully!'
-      }));
+      navigate(`/room/${response.data.id}`, { state: { outingPreferences: overrideOutingPrefs || undefined } });
+      dispatch(addNotification({ type: 'success', message: 'Room created successfully!' }));
     } catch (err) {
       setError('Failed to create room. Please try again.');
-      dispatch(addNotification({
-        type: 'error',
-        message: 'Failed to create room. Please try again.'
-      }));
+      dispatch(addNotification({ type: 'error', message: 'Failed to create room. Please try again.' }));
     } finally {
       setLoading(false);
     }
@@ -171,6 +176,56 @@ const Home: React.FC = () => {
             onSave={handlePreferencesSubmit}
             onCancel={() => setStep('welcome')}
           />
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'preCreate') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center p-4">
+        <div className="max-w-lg w-full">
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Set up your outing</h3>
+            <div className="space-y-4">
+              <Input
+                label="Occasion"
+                value={occasion}
+                onChange={setOccasion}
+                placeholder="e.g. Birthday, Team dinner, Casual hangout"
+              />
+              <Input
+                label="Mood"
+                value={mood}
+                onChange={setMood}
+                placeholder="e.g. Chill, Lively, Romantic"
+              />
+
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-700 font-medium">Override preferences just for this outing?</span>
+                <Button variant="outline" onClick={() => setOverrideOutingPrefs((p) => p ?? {
+                  cuisineTypes: [], priceRange: 'moderate', atmosphere: [], dietaryRestrictions: [], maxDistance: 10
+                })}>
+                  <Settings2 className="w-4 h-4 mr-2" /> Set Outing Preferences
+                </Button>
+              </div>
+
+              {overrideOutingPrefs && (
+                <div className="border rounded-lg p-3">
+                  <PreferencesForm
+                    initialPreferences={overrideOutingPrefs}
+                    onSave={(prefs) => setOverrideOutingPrefs(prefs)}
+                    onCancel={() => setOverrideOutingPrefs(null)}
+                  />
+                </div>
+              )}
+
+              <div className="flex space-x-3">
+                <Button className="flex-1" onClick={finalizeCreateRoom} loading={loading}>Create Room</Button>
+                <Button className="flex-1" variant="outline" onClick={() => setStep('action')}>Back</Button>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     );
