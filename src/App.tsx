@@ -27,6 +27,8 @@ const mockRoom = {
   id: 'room-1',
   code: 'ABC123',
   name: "Alex's Weekend Dinner",
+  occasion: 'friends',
+  mood: 'relaxed',
   creator: 'user-1',
   members: [
     { id: 'user-1', name: 'Alex Johnson', isOnline: true },
@@ -42,7 +44,13 @@ const mockRoom = {
     { userId: 'user-4', placeId: 'place-1', value: 'like' as const, timestamp: new Date() },
     { userId: 'user-2', placeId: 'place-3', value: 'dislike' as const, timestamp: new Date() },
   ],
-  status: 'voting' as const,
+  status: 'waiting' as const,
+  votingSession: {
+    isActive: false,
+    currentPlaceIndex: 0,
+    timeLeft: 30,
+    autoVoteEnabled: true,
+  },
   expiresAt: new Date(Date.now() + 25 * 60 * 1000), // 25 minutes from now
 };
 
